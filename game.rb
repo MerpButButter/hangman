@@ -2,6 +2,7 @@
 require_relative "dictionary"
 require_relative "styles"
 require_relative "display"
+require "yaml"
 # Hangman game in which you can start from a saved position or from scratch with a random word
 class Hangman
   include Display

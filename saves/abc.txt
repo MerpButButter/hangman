@@ -1,0 +1,5 @@
+---
+:word: hello
+:guesses:
+  :a: false
+  :b: true

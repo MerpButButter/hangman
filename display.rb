@@ -13,6 +13,18 @@ module Display
     "You have #{String(n).color('red')} chance/s left."
   end
 
+  def display_name_prompt
+    "Choose a name not included in the list above which doesn't contain '.' and is [3-100] chars long #{'>'.style('blue', 'bold')} "
+  end
+
+  def display_created_file(name)
+    "Successfully created #{(name << '.txt').style('purple', 'bold')}"
+  end
+
+  def display_saves(saves)
+    "Your current saves are: #{saves.map {|name| "\n\t#{name[6..-5].mode('bold')}" }.join}"
+  end
+
   def display_winning
     "#{'Congratulations'.style('green', 'italic')}, you won the game!"
   end
