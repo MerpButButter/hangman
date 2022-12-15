@@ -1,0 +1,9 @@
+---
+:word: purchase
+:guesses:
+  :a: true
+  :m: false
+  :e: true
+  :l: false
+  :o: false
+  :p: true

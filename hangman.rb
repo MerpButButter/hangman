@@ -2,7 +2,9 @@
 require_relative "dictionary"
 require_relative "styles"
 require_relative "display"
+require_relative "save_load"
 require "yaml"
+
 # Hangman game in which you can start from a saved position or from scratch with a random word
 class Hangman
   include Display
@@ -19,7 +21,15 @@ class Hangman
   def start
     until @round <= 0
       puts("\n\t#{replace_guesses}\t #{display_guesses(@guesses)} \n\n") if @starting
-      add_guess(propmt_player)
+      prompt = propmt_player
+      # Saves games and breaks the loop
+      if prompt == "save"
+        SaveLoad.new.save_data({ word: @word, guesses: @guesses })
+        @won = nil
+        break
+      end
+
+      add_guess(prompt)
       puts("\n\t#{replace_guesses}\t #{display_guesses(@guesses)} \n\n")
       set_round
       puts(display_chances(@round))
@@ -31,7 +41,7 @@ class Hangman
     # Prints if you won or lost the game
     if @won 
       puts(display_winning)
-    else
+    elsif @won == false
       puts(display_losing(@word))
     end
   end
@@ -45,8 +55,11 @@ class Hangman
   end
 
   def propmt_player
+    print(display_save_prompt)
     print(display_letter_prompt)
     letter = gets.chomp
+
+    return "save" if letter == "save"
     return letter if letter.match(/[a-z]/i) && letter.length == 1 && @guesses.keys.map(&:to_s).none?(letter)
     
     if @guesses.keys.map(&:to_s).none?(letter)
@@ -73,6 +86,4 @@ class Hangman
     sample.join
   end
 end
-
-Hangman.new
 # rubocop:enable Lint/ConstantResolution

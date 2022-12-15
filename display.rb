@@ -4,6 +4,10 @@ module Display
   def display_letter_prompt
     "\nEnter a guess which is a letter from the alphabet #{'>'.style('blue', 'bold')} "
   end
+  
+  def display_save_prompt
+    "\nType '#{'save'.style('orange', 'underscored')}' to save your current game"
+  end
 
   def display_error(info = "")
     "ERROR: Wrong Input.#{info}".style("red", "bold")
@@ -13,8 +17,14 @@ module Display
     "You have #{String(n).color('red')} chance/s left."
   end
 
-  def display_name_prompt
-    "Choose a name not included in the list above which doesn't contain '.' and is [3-100] chars long #{'>'.style('blue', 'bold')} "
+  def display_name_prompt(mode)
+    if mode.zero? 
+      "Choose a save name not included in the list above which doesn't contain '.' and is [3-100] chars long #{'>'.style(
+        'blue', 'bold'
+      )} "  
+    else
+      "Choose a save included in the list above #{'>'.style('blue', 'bold')} "
+    end
   end
 
   def display_created_file(name)
@@ -22,7 +32,8 @@ module Display
   end
 
   def display_saves(saves)
-    "Your current saves are: #{saves.map {|name| "\n\t#{name[6..-5].mode('bold')}" }.join}"
+    "Your current saves are: #{saves.map { |name| "\n\t#{name[6..-5].mode('bold')}" }
+.join}"
   end
 
   def display_winning
